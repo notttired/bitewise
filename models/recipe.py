@@ -1,7 +1,8 @@
 class Recipe:
-    def __init__(self, id: int, title: str, description: str, user_id: int, cook_time: int, ingredients: list, steps: list):
+    def __init__(self, id: int, title: str, description: str, user_id: int, cook_time: int, ingredients: list, steps: list, cuisine: str = ""):
         self.id = id
         self.title = title
+        self.cuisine = cuisine
         self.description = description
         self.user_id = user_id  # Link to User model
         self.cook_time = cook_time

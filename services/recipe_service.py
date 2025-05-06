@@ -27,7 +27,8 @@ class RecipeService:
                 "user_id": recipe.user_id,
                 "cook_time": recipe.cook_time,
                 "ingredients": recipe.ingredients,
-                "steps": recipe.steps
+                "steps": recipe.steps,
+                "cuisine": recipe.cuisine
             }
         )
 
@@ -46,8 +47,7 @@ class RecipeService:
                 user_id=recipe_data["user_id"],
                 cook_time=recipe_data["cook_time"],
                 ingredients=recipe_data["ingredients"],
-                steps=recipe_data["steps"]
+                steps=recipe_data["steps"],
+                cuisine=recipe_data["cuisine"]
             )
         return None
-    
-    
