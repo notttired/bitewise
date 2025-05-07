@@ -18,6 +18,11 @@ class DatabaseService:
         coll = self.connect_to_table(db_name, collection_name)
         return coll.find_one(query)
     
+    def read_documents(self, db_name: str, collection_name: str, query: dict) -> list[dict]:
+        """Reads multiple documents from the specified database and collection."""
+        coll = self.connect_to_table(db_name, collection_name)
+        return list(coll.find(query)) # returns pymongo cursor object => convert into list
+    
     def update_document(self, db_name: str, collection_name: str, query: dict, update: dict) -> None:
         """Updates a document in the specified database and collection."""
         coll = self.connect_to_table(db_name, collection_name)
