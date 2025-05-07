@@ -39,7 +39,7 @@ class RecipeService:
 
     def get_recipe(self, recipe_filters: dict[str, Any], recipe_ingredients: dict[str, list[str]] = {}) -> Recipe:
         """Retrieves a recipe from the database by its ID."""
-        recipe_data = self.database.read_document(
+        recipe_data = self.database.read_similar_documents(
             db_name = DB_NAME,
             collection_name = COLLECTION_NAME,
             query = recipe_filters # change query to include recipe ingredients too
@@ -59,7 +59,7 @@ class RecipeService:
     
     def get_recipes(self, recipe_filters: dict[str, Any], recipe_ingredients: dict[str, list[str]] = {}) -> list[Recipe]:
         """Retrieves multiple recipes from the database by their IDs."""
-        recipes_data = self.database.read_documents(
+        recipes_data = self.database.read_similar_documents(
             db_name = DB_NAME,
             collection_name = COLLECTION_NAME,
             query = recipe_filters # change query to include recipe ingredients too

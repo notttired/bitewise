@@ -1,4 +1,5 @@
 import pymongo # start [brew services start mongodb/brew/mongodb-community]
+from typing import Any
 
 class DatabaseService:
     def __init__(self):
@@ -23,6 +24,12 @@ class DatabaseService:
         coll = self.connect_to_table(db_name, collection_name)
         return list(coll.find(query)) # returns pymongo cursor object => convert into list
     
+    def read_similar_documents(self, db_name: str, collection_name: str, query: dict) -> list[dict]:
+        """Reads similar documents from the specified database and collection."""
+        coll = self.connect_to_table(db_name, collection_name)
+        query = self.keywords_to_query(query)
+        return list(coll.find(query))
+
     def update_document(self, db_name: str, collection_name: str, query: dict, update: dict) -> None:
         """Updates a document in the specified database and collection."""
         coll = self.connect_to_table(db_name, collection_name)
@@ -32,3 +39,11 @@ class DatabaseService:
         """Deletes a document from the specified database and collection."""
         coll = self.connect_to_table(db_name, collection_name)
         coll.delete_one(query)
+
+    def keywords_to_query(self, keywords: dict[str, Any]) -> dict[str, Any]:
+        """Converts object with values keywords to a query for MongoDB."""
+        query = {}
+        for key, value in keywords.items():
+            if isinstance(value, str):
+                query[key] = {"$regex": value, "$options": "i"}
+        return query

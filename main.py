@@ -12,8 +12,7 @@ scraper = RecipeScraper(user_id = 1)
 recipe_service = RecipeService(scraper, db_service)
 
 ai_api_service = AIAPIService()
-res = ai_api_service.get_tags("Mexican food with little prep time an easy to make")
-print(res)
+res = ai_api_service.get_tags("sunflower seed butter")
 
 recipe_service.suggest_recipes([
     "https://www.101cookbooks.com/sunflower-seed-butter/",
@@ -23,5 +22,8 @@ print("Saved recipe to db")
 # desserts that green and flaky adonis
 # all the tnt cakes (taro / ube)
 
-print(recipe_service.get_recipe(recipe_filters = {"id": 1}).description)
-
+print("\n\n")
+print(recipe_service.get_recipes(recipe_filters = {"id": 1})[0].title)
+print("\n\n")
+print(res)
+print(recipe_service.get_recipes(recipe_filters = res))
