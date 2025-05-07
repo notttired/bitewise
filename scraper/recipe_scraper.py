@@ -7,10 +7,10 @@ class RecipeScraper:
         self.user_id = user_id
 
     def scrape(self, url: str, id: int) -> Recipe:
-        site_data = scrape_me(url)
         # help(site_data)
 
         try:
+            site_data = scrape_me(url)
             new_recipe = Recipe(
                 id=id,
                 title=site_data.title(),
@@ -20,6 +20,7 @@ class RecipeScraper:
                 ingredients=site_data.ingredients(),
                 steps=site_data.instructions()
             )
+            print(f"Scraped successfully: {new_recipe.title}")
             return new_recipe
         except Exception as e: # excepts all exceptions
             print(f"Error scraping {url}: {e}")

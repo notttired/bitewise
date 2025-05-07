@@ -1,4 +1,4 @@
-import pymongo
+import pymongo # start [brew services start mongodb/brew/mongodb-community]
 
 class DatabaseService:
     def __init__(self):
@@ -8,7 +8,7 @@ class DatabaseService:
         """Connects to the specified database."""
         return self.client[db_name][collection_name]
 
-    def create_document(self, db_name: str, collection_name: str, document: dict) -> None:
+    def add_document(self, db_name: str, collection_name: str, document: dict) -> None:
         """Creates a new document in the specified database and collection."""
         coll = self.connect_to_table(db_name, collection_name)
         coll.insert_one(document)
