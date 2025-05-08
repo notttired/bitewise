@@ -1,5 +1,5 @@
 from scraper.recipe_scraper import RecipeScraper
-from services.database_service import DatabaseService
+from database.database_service import DatabaseService
 from services.recipe_service import RecipeService
 from services.ai_api_service import AIAPIService
 from dotenv import load_dotenv
@@ -23,7 +23,7 @@ print("Saved recipe to db")
 # all the tnt cakes (taro / ube)
 
 print("\n\n")
-print(recipe_service.get_recipes(recipe_filters = {"id": 1})[0].title)
+print(recipe_service.get_recipes(recipe_filters = {"id": 1})[0].cook_time)
 print("\n\n")
 print(res)
 print(recipe_service.get_recipes(recipe_filters = res))

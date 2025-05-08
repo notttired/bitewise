@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from services.recipe_service import RecipeService
 from scraper.recipe_scraper import RecipeScraper
-from services.database_service import DatabaseService
+from database.database_service import DatabaseService
 from models.recipe import Recipe
 from services.ai_api_service import AIAPIService
 
