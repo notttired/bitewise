@@ -1,6 +1,6 @@
 from scraper.recipe_scraper import RecipeScraper
 from models.recipe import Recipe
-from services.database_service import DatabaseService
+from database.database_service import DatabaseService
 
 from typing import Any
 
