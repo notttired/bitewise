@@ -23,7 +23,9 @@ class Normalizer:
     def normalize_data(self, data: pd.DataFrame) -> pd.DataFrame:
         """Provides basic normalization of data"""
         for col in data.columns:
-            if data[col].dtype == 'string':
+            if col == 'url':
+                pass
+            elif data[col].dtype == 'string':
                 data.dropna(subset = ['title'], inplace = True) # requires title to be present
                 data[col] = data[col].str.strip().str.lower().str.translate(str.maketrans('', '', string.punctuation))
             elif data[col].dtype == 'number':

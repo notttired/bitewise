@@ -33,7 +33,8 @@ class RecipeService:
                 "cook_time": recipe.cook_time,
                 "ingredients": recipe.ingredients,
                 "steps": recipe.steps,
-                "cuisine": recipe.cuisine
+                "cuisine": recipe.cuisine,
+                "url": recipe.url
             }
         )
 
@@ -53,7 +54,8 @@ class RecipeService:
                 cook_time = recipe_data["cook_time"],
                 ingredients = recipe_data["ingredients"],
                 steps = recipe_data["steps"],
-                cuisine = recipe_data["cuisine"]
+                cuisine = recipe_data["cuisine"],
+                url = recipe_data["url"]
             )
         return None
     
@@ -76,7 +78,8 @@ class RecipeService:
                         cook_time = recipe_data["cook_time"],
                         ingredients = recipe_data["ingredients"],
                         steps = recipe_data["steps"],
-                        cuisine = recipe_data["cuisine"]
+                        cuisine = recipe_data["cuisine"],
+                        url = recipe_data["url"]
                     )
                 )
             return recipes

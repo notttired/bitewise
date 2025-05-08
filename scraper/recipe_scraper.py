@@ -12,13 +12,15 @@ class RecipeScraper:
         try:
             site_data = scrape_me(url)
             new_recipe = Recipe(
-                id=id,
-                title=site_data.title(),
-                description=site_data.description(),
-                user_id=self.user_id,
-                cook_time=site_data.total_time(),
-                ingredients=site_data.ingredients(),
-                steps=site_data.instructions()
+                id = id,
+                title = site_data.title(),
+                description = site_data.description(),
+                user_id = self.user_id,
+                cook_time = site_data.total_time(),
+                ingredients = site_data.ingredients(),
+                steps = site_data.instructions(),
+                cuisine = site_data.cuisine(),
+                url = url
             )
             print(f"Scraped successfully: {new_recipe.title}")
             return new_recipe
