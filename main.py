@@ -11,6 +11,10 @@ db_service = DatabaseService()
 scraper = RecipeScraper(user_id = 1)
 recipe_service = RecipeService(scraper, db_service)
 
+DB_NAME = "main"
+COLLECTION_NAME = "recipes"
+db_service.delete_all_documents(DB_NAME, COLLECTION_NAME)
+
 ai_api_service = AIAPIService()
 res = ai_api_service.get_tags("sunflower seed butter")
 
@@ -23,7 +27,7 @@ print("Saved recipe to db")
 # all the tnt cakes (taro / ube)
 
 print("\n\n")
-print(recipe_service.get_recipes(recipe_filters = {"id": 1})[0].cook_time)
+print(recipe_service.get_recipes(recipe_filters = {"id": 1})[0].url)
 print("\n\n")
 print(res)
 print(recipe_service.get_recipes(recipe_filters = res))

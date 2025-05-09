@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import string
+from database.database_service import DatabaseService
 
 class Normalizer:
     def __init__(self, database: DatabaseService):
@@ -16,6 +17,7 @@ class Normalizer:
 
     def extract_data(self, db_name: str, collection_name: str) -> list[dict]:
         data = self.database.read_all_documents(db_name, collection_name)
+        return data
 
     def convert_to_dataframe(self, data: list[dict]) -> pd.DataFrame:
         return pd.DataFrame(data)
@@ -32,7 +34,7 @@ class Normalizer:
                 q1 = data[col].quantile(0.25)
                 q3 = data[col].quantile(0.75)
                 IQR = q3 - q1
-                data = data[data[col] >= q1 - 1.5 * IQR & data[col <= q3 + 1.5 * IQR]]
+                data = data[(data[col] >= q1 - 1.5 * IQR) & (data[col] <= q3 + 1.5 * IQR)]
     
     def convert_to_list(self, data: pd.DataFrame) -> list[dict]:
         return data.to_dict(orient='records')
