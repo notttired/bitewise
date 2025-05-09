@@ -3,6 +3,7 @@ from models.recipe import Recipe
 from database.database_service import DatabaseService
 
 from typing import Any
+from typing import Optional
 
 DB_NAME = "main"
 COLLECTION_NAME = "recipes"
@@ -11,7 +12,43 @@ class RecipeService:
     def __init__(self, scraper: RecipeScraper, database: DatabaseService):
         self.scraper = scraper
         self.database = database
-    
+
+    def recipes_to_dicts(self, recipes: list[Recipe]) -> list[dict]:
+        list_of_dicts = []
+        for recipe in recipes:
+            list_of_dicts.append(
+                {
+                    "id": recipe.id,
+                    "title": recipe.title,
+                    "description": recipe.description,
+                    "user_id": recipe.user_id,
+                    "cook_time": recipe.cook_time,
+                    "ingredients": recipe.ingredients,
+                    "steps": recipe.steps,
+                    "cuisine": recipe.cuisine,
+                    "url": recipe.url
+                }
+            )
+        return list_of_dicts
+
+    def dicts_to_recipes(self, dicts: list[dict]) -> list[Recipe]:
+        list_of_recipes = []
+        for dict in dicts:
+            list_of_recipes.append(
+                Recipe(
+                    id = dict["id"],
+                    title = dict["title"],
+                    description = dict["description"],
+                    user_id = dict["user_id"],
+                    cook_time = dict["cook_time"],
+                    ingredients = dict["ingredients"],
+                    steps = dict["steps"],
+                    cuisine = dict["cuisine"],
+                    url = dict["url"]
+                )
+            )
+        return list_of_recipes
+
     def suggest_recipes(self, urls: list[str]) -> None:
         """Adds new recipes to the database by scraping the provided URLs."""
         for url in urls:
@@ -23,7 +60,7 @@ class RecipeService:
     def save_recipe(self, recipe: Recipe) -> None:
         """Adds a new recipe to the database."""
         self.database.add_document(
-            db_name= DB_NAME,
+            db_name = DB_NAME,
             collection_name = COLLECTION_NAME,
             document = {
                 "id": recipe.id,
@@ -38,9 +75,20 @@ class RecipeService:
             }
         )
 
-    def get_recipe(self, recipe_filters: dict[str, Any], recipe_ingredients: dict[str, list[str]] = {}) -> Recipe:
-        """Retrieves a recipe from the database by its ID."""
-        recipe_data = self.database.read_similar_documents(
+    def save_recipes(self, recipes: list[Recipe]) -> None:
+        """Adds multiple new recipes to the database"""
+        self.database.add_documents(
+            db_name = DB_NAME,
+            collection_name = COLLECTION_NAME,
+            documents = self.recipes_to_dicts(recipes)
+        )
+
+    def get_recipe(self, recipe_filters: dict[str, Any], recipe_ingredients: dict[str, list[str]] = {}) -> Optional[Recipe]:
+        """
+            Retrieves a recipe from the database by its ID.
+            DOES NOT USE SIMILAR; MUST BE EXACT
+        """
+        recipe_data: dict = self.database.read_document(
             db_name = DB_NAME,
             collection_name = COLLECTION_NAME,
             query = recipe_filters # change query to include recipe ingredients too
@@ -59,9 +107,9 @@ class RecipeService:
             )
         return None
     
-    def get_recipes(self, recipe_filters: dict[str, Any], recipe_ingredients: dict[str, list[str]] = {}) -> list[Recipe]:
+    def get_recipes(self, recipe_filters: dict[str, Any], recipe_ingredients: dict[str, list[str]] = {}) -> Optional[list[Recipe]]:
         """Retrieves multiple recipes from the database by their IDs."""
-        recipes_data = self.database.read_similar_documents(
+        recipes_data: list[dict[str, Any]] = self.database.read_similar_documents(
             db_name = DB_NAME,
             collection_name = COLLECTION_NAME,
             query = recipe_filters # change query to include recipe ingredients too
