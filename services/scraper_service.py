@@ -14,13 +14,19 @@ class ScraperService:
     def scrape_all_supported_sites(self) -> list[Recipe]:
         recipe_urls = []
         for supported_site in self.supported_sites:
-            recipe_urls.extend(self.recipe_url_generator.extract_urls(supported_site))
+            try:
+                recipe_urls.extend(self.recipe_url_generator.extract_urls(supported_site))
+            except Exception as e:
+                print(f"Error: {e}")
         
         recipes = []
         for recipe_url in recipe_urls:
-            recipe = self.recipe_scraper.scrape(recipe_url, 1) # PLACEHOLDER
-            if recipe:
-                recipes.append(recipe)
+            try:
+                recipe = self.recipe_scraper.scrape(recipe_url, 1) # PLACEHOLDER
+                if recipe:
+                    recipes.append(recipe)
+            except Exception as e:
+                print(f"Error: {e}")
     
         return recipes
 
