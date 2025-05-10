@@ -62,3 +62,8 @@ class DatabaseService:
             if isinstance(value, str):
                 query[key] = {"$regex": value, "$options": "i"}
         return query
+    
+    def print_db(self, db_name: str, collection_name: str) -> None:
+        coll = self.connect_to_table(db_name, collection_name)
+        documents = self.read_documents(db_name, collection_name, {})
+        print(documents)
