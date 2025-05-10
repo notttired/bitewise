@@ -15,11 +15,11 @@ class Normalizer:
         data = self.convert_to_list(data)
         self.replace_database(data, db_name, collection_name)
 
-    def extract_data(self, db_name: str, collection_name: str) -> list[dict]:
+    def extract_db(self, db_name: str, collection_name: str) -> list[dict]:
         data = self.database.read_all_documents(db_name, collection_name)
         return data
 
-    def convert_to_dataframe(self, data: list[dict]) -> pd.DataFrame:
+    def convert_to_df(self, data: list[dict]) -> pd.DataFrame:
         return pd.DataFrame(data)
     
     def normalize_data(self, data: pd.DataFrame) -> pd.DataFrame:
@@ -39,6 +39,6 @@ class Normalizer:
     def convert_to_list(self, data: pd.DataFrame) -> list[dict]:
         return data.to_dict(orient='records')
     
-    def replace_database(self, data: list[dict], db_name: str, collection_name: str) -> None:
+    def replace_db(self, data: list[dict], db_name: str, collection_name: str) -> None:
         self.database.delete_all_documents(db_name, collection_name)
         self.database.add_documents(db_name, collection_name, data)

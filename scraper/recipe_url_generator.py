@@ -2,6 +2,7 @@ import re
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
+from processing.recipe_filter_service import filter_recipe_urls
 
 RECIPE_URL_PATTERNS = [
     r"/.*recipe.*/",
@@ -23,7 +24,8 @@ class RecipeURLGenerator:
         html_content = requests.get(main_url).text
         soup = BeautifulSoup(html_content, 'html.parser')
         url_tags = soup.find_all('a', href = True)
-        
+
+        # Filter with regex
         recipe_urls = []
         for tag in url_tags:
             href = tag['href']
@@ -31,5 +33,8 @@ class RecipeURLGenerator:
                 if href.startswith("/"):
                     href = urljoin(main_url, href)
                 recipe_urls.append(href)
+
+        # Filter again with NLP
+        recipe_urls = filter_recipe_urls(recipe_urls)
 
         return recipe_urls
