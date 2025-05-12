@@ -27,7 +27,7 @@ load_dotenv()
 DB_NAME = "main"
 COLLECTION_NAME = "recipes"
 supported_sites = list(SCRAPERS.keys())
-short_supported_sites = supported_sites[:10]
+short_supported_sites = supported_sites[:30]
 RECIPE_URL_PATTERNS = [
     r"/.*recipe.*/",
     r"/.*recipe",
