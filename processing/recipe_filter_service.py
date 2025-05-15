@@ -7,8 +7,6 @@ model = SentenceTransformer('all-MiniLM-L6-v2')
 def filter_recipes(texts: list[str], threshold: float = 0.5) -> list[str]:
     """str CANNOT BE EMPTY"""
     references = [
-        "Recipe",
-        "Classic Recipe",
         "Classic Margherita Pizza",
         "Spicy Thai Green Curry",
         "Vegan Lentil Soup",

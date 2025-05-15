@@ -11,6 +11,7 @@ class RecipeScraper:
         # help(site_data)
 
         try:
+            print(f"Attempting to scrape: {url}")
             site_data = scrape_me(url)
             new_recipe = Recipe(
                 id = id,
