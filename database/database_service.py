@@ -1,9 +1,9 @@
 import pymongo # start [brew services start mongodb/brew/mongodb-community]
 from typing import Any
-
+import os
 class DatabaseService:
     def __init__(self):
-        self.client = client = pymongo.MongoClient("mongodb://localhost:27017/")
+        self.client = client = pymongo.MongoClient(os.getenv("MONGO_URI"))
 
     def connect_to_table(self, db_name: str, collection_name: str) -> pymongo.database.Database:
         """Connects to the specified database."""
