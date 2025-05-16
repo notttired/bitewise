@@ -1,5 +1,6 @@
 from openai import OpenAI
 import json
+import os
 
 # system_role = """
 #     You are an helpful AI assistant that provides tags based on the specifications given in the prompt.
@@ -28,7 +29,7 @@ system_role = """
 # include ingredients, steps
 class AIAPIService:
     def __init__(self):
-        self.client = OpenAI()
+        self.client = OpenAI(os.getenv("OPENAI_API_KEY"))
 
     def get_tags(self, prompt: str) -> dict[str, str]:
         """Returns tags based on the provided prompt."""
