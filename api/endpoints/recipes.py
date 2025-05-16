@@ -31,3 +31,8 @@ def get_recipes(intent: str) -> dict:
 def get_all_recipes() -> list[dict]:
     recipes = recipe_service.get_recipes({})
     return recipes_to_dicts(recipes)
+
+@router.get("/")
+def new_get_all_recipes() -> list[dict]:
+    recipes = recipe_service.get_recipes({})
+    return recipes_to_dicts(recipes)
