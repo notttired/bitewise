@@ -1,6 +1,9 @@
 from openai import OpenAI
 import json
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # system_role = """
 #     You are an helpful AI assistant that provides tags based on the specifications given in the prompt.
@@ -29,7 +32,7 @@ system_role = """
 # include ingredients, steps
 class AIAPIService:
     def __init__(self):
-        self.client = OpenAI(os.getenv("OPENAI_API_KEY"))
+        self.client = OpenAI()
 
     def get_tags(self, prompt: str) -> dict[str, str]:
         """Returns tags based on the provided prompt."""
