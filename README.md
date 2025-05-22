@@ -11,7 +11,7 @@ This API provides endpoints to manage and suggest recipes using AI-driven filter
 Retrieves all recipes stored in the database.
 
 - **Response:**  
-  JSON array of all recipe objects.
+  JSON file of all recipes.
 
 
 
